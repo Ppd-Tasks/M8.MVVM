@@ -51,7 +51,9 @@ class MainActivity : AppCompatActivity() {
     var createLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()){ result ->
         if(result.resultCode == Activity.RESULT_OK){
-            //mainPresenter.apiPostList()
+            viewModel.apiPostList().observe(this, Observer{
+                refreshAdapter(it)
+            })
         }
     }
 
@@ -64,7 +66,9 @@ class MainActivity : AppCompatActivity() {
     var updateLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()){ result ->
         if(result.resultCode == Activity.RESULT_OK){
-            //mainPresenter.apiPostList()
+            viewModel.apiPostList().observe(this, Observer{
+                refreshAdapter(it)
+            })
         }
     }
 

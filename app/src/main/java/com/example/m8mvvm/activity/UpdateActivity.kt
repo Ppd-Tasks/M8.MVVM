@@ -1,11 +1,15 @@
 package com.example.m8mvvm.activity
 
+import android.app.Activity
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import androidx.lifecycle.ViewModelProvider
 import com.example.m8mvvm.R
 import com.example.m8mvvm.model.Post
+import com.example.m8mvvm.viewModel.CreateViewModel
 import com.example.m8mvvm.viewModel.UpdateViewModel
 
 class UpdateActivity : AppCompatActivity() {
@@ -21,7 +25,7 @@ class UpdateActivity : AppCompatActivity() {
     }
 
     private fun initViews() {
-        //updatePresenter = UpdatePresenter(this)
+        viewModel = ViewModelProvider(this).get(UpdateViewModel::class.java)
         et_title = findViewById(R.id.et_title)
         et_body = findViewById(R.id.et_body)
         val btn_cancel = findViewById<Button>(R.id.btn_cancel)
@@ -44,6 +48,10 @@ class UpdateActivity : AppCompatActivity() {
         post.title = et_title.text.toString()
         post.body = et_body.text.toString()
 
-        //updatePresenter.apiPostUpdate(post)
+        viewModel.apiPostUpdate(post).observe(this, {
+            val intent = Intent()
+            setResult(Activity.RESULT_OK, intent)
+            finish()
+        })
     }
 }
